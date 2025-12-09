@@ -15,7 +15,11 @@ switch($action) {
     case 'login':
         include 'views/login.php';
         break;
-    
+
+    case 'signIn':
+        include 'views/signIn.php';
+        break;
+
     case 'do_login':
         include 'controllers/UserController.php';
         doLogin(); // fonction dans le controller
