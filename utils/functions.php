@@ -31,8 +31,4 @@ function requireAdmin() {
         die("Accès refusé : vous devez être administrateur");
     }
 }
-// Générer un hash de mot de passe (pour tester)
-function hashPassword($password) {
-    return password_hash($password, PASSWORD_DEFAULT);
-}
 ?>
