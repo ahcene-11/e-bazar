@@ -15,7 +15,7 @@ function doLogin() {
     $user = $userModel->authenticate($email, $password);
 
     if ($user) {
-        // Stocker en session (utiliser toArray())
+        session_regenerate_id(true);
         $_SESSION['user'] = $user->toArray();
         header('Location: index.php');
     } else {
