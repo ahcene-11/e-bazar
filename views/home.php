@@ -14,7 +14,7 @@
                 <a href="index.php?action=logout">Déconnexion</a>
             <?php else: ?>
                 <a href="index.php?action=login">Connexion</a>
-                <a href="index.php?action=signIn">Inscription</a>
+                <a href="index.php?action=signUp">Inscription</a>
             <?php endif; ?>
         </nav>
     </header>

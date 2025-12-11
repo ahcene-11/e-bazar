@@ -26,7 +26,7 @@ switch($action) {
         break;
     case 'do_signUp':
         include 'controllers/UserController.php';
-        doSignUp(); // fonction dans le controller
+        do_signUp(); // fonction dans le controller
         break;
     case 'logout':
         session_destroy();
