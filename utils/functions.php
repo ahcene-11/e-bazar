@@ -16,7 +16,21 @@ function requireLogin() {
         exit;
     }
 }
-
+// Dans utils/functions.php
+function requireAdmin() {
+    if (!isset($_SESSION['user'])) {
+        header('Location: index.php?action=login');
+        exit;
+    }
+    
+    // Récupérer l'objet User depuis la session
+    $userArray = $_SESSION['user'];
+    $user = User::fromArray($userArray);
+    
+    if (!$user->isAdmin()) {
+        die("Accès refusé : vous devez être administrateur");
+    }
+}
 // Générer un hash de mot de passe (pour tester)
 function hashPassword($password) {
     return password_hash($password, PASSWORD_DEFAULT);
