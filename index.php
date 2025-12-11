@@ -16,15 +16,18 @@ switch($action) {
         include 'views/login.php';
         break;
 
-    case 'signIn':
-        include 'views/signIn.php';
+    case 'signUp':
+        include 'views/signUp.php';
         break;
 
     case 'do_login':
         include 'controllers/UserController.php';
         doLogin(); // fonction dans le controller
         break;
-    
+    case 'do_signUp':
+        include 'controllers/UserController.php';
+        doSignUp(); // fonction dans le controller
+        break;
     case 'logout':
         session_destroy();
         header('Location: index.php');

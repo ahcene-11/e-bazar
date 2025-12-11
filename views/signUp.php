@@ -12,7 +12,7 @@
     </header>
 
     <h2>Inscription</h2>
-    <form action="" method="POST">
+    <form action="index.php?action=do_signUp" method="POST">
     <label for="">
         Email:
         <input type="email" name="email" required>

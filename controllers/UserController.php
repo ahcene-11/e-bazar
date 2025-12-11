@@ -2,30 +2,49 @@
 // Cette fonction est appelée quand on soumet le formulaire de connexion
 
 function doLogin() {
-    global $pdo; // Accès à la connexion BDD
-    
-    // Récupérer les données du formulaire
+    global $pdo;
+
     $email = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';
-    
-    // Chercher l'utilisateur dans la BDD
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
-    $stmt->execute([$email]);
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-    // Vérifier le mot de passe
-    if ($user && password_verify($password, $user['password'])) {
-        // Connexion réussie : on stocke l'user en session
-        $_SESSION['user'] = [
-            'id' => $user['id'],
-            'email' => $user['email'],
-            'role' => $user['role']
-        ];
-        header('Location: index.php'); // Redirection vers accueil
+
+    // Authentifier
+    $userModel = new UserModel($pdo);
+    $user = $userModel->authenticate($email, $password);
+
+    if ($user) {
+        // Stocker en session (utiliser toArray())
+        $_SESSION['user'] = $user->toArray();
+        header('Location: index.php');
     } else {
-        // Échec : message d'erreur
         $_SESSION['error'] = "Email ou mot de passe incorrect";
         header('Location: index.php?action=login');
+    }
+    exit;
+}
+
+function doRegister() {
+    global $pdo;
+
+    $email = $_POST['email'] ?? '';
+    $password = $_POST['password'] ?? '';
+
+    // Validation basique
+    if (empty($email) || empty($password)) {
+        $_SESSION['error'] = "Tous les champs sont obligatoires";
+        header('Location: index.php?action=signUp');
+        exit;
+    }
+
+    // Créer l'utilisateur
+    $userModel = new UserModel($pdo);
+    $userId = $userModel->create($email, $password);
+
+    if ($userId) {
+        $_SESSION['success'] = "Compte créé avec succès !";
+        header('Location: index.php?action=login');
+    } else {
+        $_SESSION['error'] = "Email déjà utilisé";
+        header('Location: index.php?action=signUp');
     }
     exit;
 }
