@@ -41,13 +41,14 @@ class AnnonceModel {
         $sql = "SELECT a.*, c.name as category_name
                 FROM annonces a
                 JOIN categories c ON a.category_id = c.id
-                WHERE a.category_id = ? AND a.status = 'available'
+                WHERE a.category_id = :cat AND a.status = 'available'
                 ORDER BY a.created_at DESC
                 LIMIT :limit OFFSET :offset";
         $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':cat', (int)$categoryId, PDO::PARAM_INT);
         $stmt->bindValue(':limit', (int)$perPage, PDO::PARAM_INT);
         $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
-        $stmt->execute([$categoryId]);
+        $stmt->execute();
         
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

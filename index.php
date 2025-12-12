@@ -2,6 +2,12 @@
 session_start();
 require_once 'config.php';
 
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+
 // Récupérer l'action demandée dans l'URL
 // Ex: index.php?action=login ou juste index.php
 $action = $_GET['action'] ?? 'home';
@@ -25,15 +31,32 @@ switch($action) {
         include 'controllers/UserController.php';
         doLogin(); // fonction dans le controller
         break;
+
     case 'do_signUp':
         include 'controllers/UserController.php';
         do_signUp(); // fonction dans le controller
         break;
+
     case 'logout':
         session_destroy();
         header('Location: index.php');
         break;
-    
+
+    case 'category':
+        require_once 'controllers/CategoryListController.php';
+        showCategoryList(); 
+        break;
+
+    case 'detail':
+        require_once 'controllers/AnnonceDetailController.php';
+        showAnnonceDetail(); // 
+        break;
+
+    case 'do_delete_annonce':
+        require_once 'controllers/AnnonceDetailController.php';
+        doDeleteAnnonce();
+        break;
+        
     default:
         echo "Page non trouvée";
 }

@@ -10,7 +10,7 @@
 // $annonce (tableau associatif avec toutes les infos)
 
 $pageTitle = htmlspecialchars($annonce['title']) . ' - e-bazar';
-include 'views/layout/header.php';
+include 'views/components/header.php';
 ?>
 
 <main class="container">
