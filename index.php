@@ -9,7 +9,8 @@ $action = $_GET['action'] ?? 'home';
 // Router simple : selon l'action, on inclut la bonne vue
 switch($action) {
     case 'home':
-        include 'views/home.php';
+        require_once 'controllers/HomeController.php';
+        showHome();
         break;
     
     case 'login':
@@ -36,4 +37,4 @@ switch($action) {
     default:
         echo "Page non trouvée";
 }
-?>
+?>AnnonceController.ph
