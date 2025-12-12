@@ -6,11 +6,9 @@
     <link rel="stylesheet" href="public/css/style.css">
 </head>
 <body>
-    <header>
-        <h1>e-bazar</h1>
-        <a href="index.php">Retour accueil</a>
-    </header>
-
+    <?php
+    include_once 'views/header.php';
+    ?>
     <main>
         <h2>Connexion</h2>
         

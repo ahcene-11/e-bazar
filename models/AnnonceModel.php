@@ -15,9 +15,10 @@ class AnnonceModel {
                 JOIN users u ON a.user_id = u.id
                 WHERE a.status = 'available'
                 ORDER BY a.created_at DESC
-                LIMIT ?";
+                LIMIT :limit";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([$limit]);
+        $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+        $stmt->execute();
         
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -42,9 +43,11 @@ class AnnonceModel {
                 JOIN categories c ON a.category_id = c.id
                 WHERE a.category_id = ? AND a.status = 'available'
                 ORDER BY a.created_at DESC
-                LIMIT ? OFFSET ?";
+                LIMIT :limit OFFSET :offset";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([$categoryId, $perPage, $offset]);
+        $stmt->bindValue(':limit', (int)$perPage, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
+        $stmt->execute([$categoryId]);
         
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
