@@ -13,7 +13,7 @@
 // $recentAnnonces (tableau avec toutes les infos)
 
 $pageTitle = 'Accueil - e-bazar';
-include 'views/header.php';
+include 'views/components/header.php';
 ?>
     <main class="container">
     <!-- Section Catégories -->

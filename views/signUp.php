@@ -6,10 +6,9 @@
     <link rel="stylesheet" href="public/css/style.css">
 </head>
 <body>
-    <header>
-        <h1>e-bazar</h1>
-        <a href="index.php">Retour accueil</a>
-    </header>
+    <?php
+    include_once 'views/components/header.php';
+    ?>
 
     <h2>Inscription</h2>
     <form action="index.php?action=do_signUp" method="POST">

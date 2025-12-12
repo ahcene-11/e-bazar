@@ -7,7 +7,7 @@
 </head>
 <body>
     <?php
-    include_once 'views/header.php';
+    include_once 'views/components/header.php';
     ?>
     <main>
         <h2>Connexion</h2>
