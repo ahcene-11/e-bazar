@@ -1,27 +1,23 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Inscription</title>
-    <link rel="stylesheet" href="public/css/style.css">
-</head>
-<body>
+
     <?php
+    $pageTitle = 'Inscription - e-bazar';
     include_once 'views/components/header.php';
     ?>
-
-    <h2>Inscription</h2>
+    <div class="form-container">
     <form action="index.php?action=do_signUp" method="POST">
-    <label for="">
+    <h2>Inscription</h2>
+
+    <label >
         Email:
         <input type="email" name="email" required>
     </label>
-    <label for="">
+    <label >
         Mot de passe:
         <input type="password" name="password" required>
     </label>
     <button type="submit">S'inscrire</button>
 
     </form>
+    </div>
 </body>
 </html>

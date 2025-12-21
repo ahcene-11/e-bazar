@@ -4,6 +4,6 @@
         <?php echo $category['nb_annonces'] ?? 0 ?> annonce<?php echo ($category['nb_annonces'] ?? 0) > 1 ? 's' : '' ?>
     </p>
     <a href="index.php?action=category&id=<?php echo $category['id'] ?>" class="btn-secondary">
-        Voir les annonces →
+        Voir les annonces 
     </a>
 </div>

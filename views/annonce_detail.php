@@ -1,10 +1,3 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-</head>
-<body>
     <?php
 // Variables disponibles depuis le contrôleur (case 'detail' dans index.php) :
 // $annonce (tableau associatif avec toutes les infos)
@@ -57,7 +50,7 @@ include 'views/components/header.php';
 
             <div class="detail-category">
                 <span class="category-badge-large">
-                    📂 <?= htmlspecialchars($annonce['category_name']) ?>
+                     <?= htmlspecialchars($annonce['category_name']) ?>
                 </span>
             </div>
 
@@ -70,10 +63,10 @@ include 'views/components/header.php';
                 <h3>Modes de livraison acceptés</h3>
                 <div class="delivery-modes">
                     <?php if ($annonce['delivery_postal']): ?>
-                        <span class="delivery-badge">📮 Envoi postal</span>
+                        <span class="delivery-badge"> Envoi postal</span>
                     <?php endif; ?>
                     <?php if ($annonce['delivery_hand']): ?>
-                        <span class="delivery-badge">🤝 Remise en main propre</span>
+                        <span class="delivery-badge"> Remise en main propre</span>
                     <?php endif; ?>
                 </div>
             </div>

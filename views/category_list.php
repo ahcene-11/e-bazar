@@ -1,11 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
  <?php
 
 $pageTitle = htmlspecialchars($category->getName()) . ' - e-bazar';
@@ -14,7 +6,7 @@ include 'views/components/header.php';
 
 <main class="container">
     <div class="breadcrumb">
-        <a href="index.php"> ← Retour à l'accueil</a>
+        <a href="index.php">  Retour à l'accueil</a>
     </div>
 
     <div class="category-header">
@@ -68,7 +60,7 @@ include 'views/components/header.php';
                             </span>
                         </div>
                         <a href="index.php?action=detail&id=<?= $annonce['id'] ?>" class="btn-primary">
-                            Voir le détail →
+                            Voir le détail 
                         </a>
                     </div>
                 </div>
@@ -81,7 +73,7 @@ include 'views/components/header.php';
                 <?php if ($currentPage > 1): ?>
                     <a href="index.php?action=category&id=<?= $categoryId ?>&page=<?= $currentPage - 1 ?>" 
                        class="pagination-btn">
-                        ← Précédent
+                         Précédent
                     </a>
                 <?php endif; ?>
 
@@ -101,7 +93,7 @@ include 'views/components/header.php';
                 <?php if ($currentPage < $totalPages): ?>
                     <a href="index.php?action=category&id=<?= $categoryId ?>&page=<?= $currentPage + 1 ?>" 
                        class="pagination-btn">
-                        Suivant →
+                        Suivant 
                     </a>
                 <?php endif; ?>
             </div>

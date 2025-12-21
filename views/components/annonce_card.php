@@ -13,7 +13,7 @@
             <span class="category-badge"><?php echo htmlspecialchars($annonce['category_name']) ?></span>
         </p>
         <a href="index.php?action=detail&id=<?php echo $annonce['id'] ?>" class="btn-primary">
-            Voir le détail →
+            Voir le détail 
         </a>
     </div>
 </div>
