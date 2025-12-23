@@ -8,20 +8,25 @@ class AnnonceModel {
         $this->pdo = $pdo;
     }
     
-    public function getRecent($limit = 4) {
-        $sql = "SELECT a.*, c.name as category_name, u.email as seller_email
-                FROM annonces a
-                JOIN categories c ON a.category_id = c.id
-                JOIN users u ON a.user_id = u.id
-                WHERE a.status = 'available'
-                ORDER BY a.created_at DESC
-                LIMIT :limit";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
-        $stmt->execute();
-        
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+public function getRecent($limit = 4) {
+    // 1. On ajoute p.filename
+    $sql = "SELECT a.*, c.name as category_name, u.email as seller_email, 
+                   p.filename as photo_filename
+            FROM annonces a
+            JOIN categories c ON a.category_id = c.id
+            JOIN users u ON a.user_id = u.id
+            -- 2. On joint la table photos, mais seulement pour la photo principale
+            LEFT JOIN photos p ON a.id = p.annonce_id AND p.is_primary = 1
+            WHERE a.status = 'available'
+            ORDER BY a.created_at DESC
+            LIMIT :limit";
+
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+    $stmt->execute();
+    
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
     
     public function getById($id) {
         $sql = "SELECT a.*, c.name as category_name, u.email as seller_email
@@ -35,23 +40,26 @@ class AnnonceModel {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
     
-    public function getByCategory($categoryId, $page = 1, $perPage = 10) {
-        $offset = ($page - 1) * $perPage;
-        
-        $sql = "SELECT a.*, c.name as category_name
-                FROM annonces a
-                JOIN categories c ON a.category_id = c.id
-                WHERE a.category_id = :cat AND a.status = 'available'
-                ORDER BY a.created_at DESC
-                LIMIT :limit OFFSET :offset";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':cat', (int)$categoryId, PDO::PARAM_INT);
-        $stmt->bindValue(':limit', (int)$perPage, PDO::PARAM_INT);
-        $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
-        $stmt->execute();
-        
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+   public function getByCategory($categoryId, $page = 1, $perPage = 10) {
+    $offset = ($page - 1) * $perPage;
+    
+    // Modification ici : ajout de p.filename et du LEFT JOIN
+    $sql = "SELECT a.*, c.name as category_name, p.filename as photo_filename
+            FROM annonces a
+            JOIN categories c ON a.category_id = c.id
+            LEFT JOIN photos p ON a.id = p.annonce_id AND p.is_primary = 1
+            WHERE a.category_id = :cat AND a.status = 'available'
+            ORDER BY a.created_at DESC
+            LIMIT :limit OFFSET :offset";
+
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->bindValue(':cat', (int)$categoryId, PDO::PARAM_INT);
+    $stmt->bindValue(':limit', (int)$perPage, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
+    $stmt->execute();
+    
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
     
 
     public function countByCategory($categoryId) {

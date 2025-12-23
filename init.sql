@@ -49,3 +49,12 @@ INSERT INTO annonces (user_id, category_id, title, description, price, delivery_
 (2, 1, 'Souris gaming Logitech', 'Souris gaming haute précision, 7 boutons programmables, capteur optique 12000 DPI. Comme neuve, jamais servie.', 45.00, TRUE, FALSE, 'available'),
 (2, 2, 'Cafetière Nespresso', 'Cafetière à capsules Nespresso, modèle Vertuo. Très bon état, détartrée régulièrement. Vendue avec 20 capsules.', 60.00, FALSE, TRUE, 'available'),
 (2, 3, 'Bureau en bois massif', 'Bureau en chêne massif, dimensions 120x80cm. Quelques traces d\'usage mais très solide. Idéal pour télétravail.', 150.00, FALSE, TRUE, 'available');
+
+
+CREATE TABLE IF NOT EXISTS photos (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    annonce_id INT NOT NULL,
+    filename VARCHAR(255) NOT NULL,
+    is_primary BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (annonce_id) REFERENCES annonces(id) ON DELETE CASCADE
+);
