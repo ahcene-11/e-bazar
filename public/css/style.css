@@ -111,7 +111,15 @@ a {
     padding: 0.5rem 1rem;
     border-radius: 5px;
 }
-
+.user-avatar {
+    width: 40px;            /* Largeur petite (taille d'une icône) */
+    height: 40px;           /* Hauteur identique pour faire un carré */
+    border-radius: 50%;     /* Rend l'image parfaitement ronde */
+    object-fit: cover;      /* Coupe l'image proprement sans l'écraser si elle n'est pas carrée */
+    vertical-align: middle; /* Aligne l'image avec le texte à côté */
+    margin-right: 8px;      /* Ajoute un petit espace entre l'image et l'email */
+    border: 2px solid white;/* Optionnel : petit contour blanc joli sur le fond bleu */
+}
 /* ========== ALERTS ========== */
 .alert {
     padding: 1rem;
