@@ -30,11 +30,14 @@ include 'views/components/header.php';
             <?php foreach($annonces as $annonce): ?>
                 <div class="annonce-list-item">
                     <div class="annonce-image-large">
-                        <?php
-                        // Pour l'instant pas de photos (Phase 4)
-                        ?>
-                        <div class="image-placeholder">📷</div>
-                    </div>
+    <?php if (!empty($annonce['photo_filename'])): ?>
+        <img src="public/uploads/<?= htmlspecialchars($annonce['photo_filename']) ?>" 
+             alt="<?= htmlspecialchars($annonce['title']) ?>"
+             style="width: 100%; height: 100%; object-fit: cover;">
+    <?php else: ?>
+        <div class="image-placeholder">📷</div>
+    <?php endif; ?>
+</div>
                     <div class="annonce-details">
                         <h3 class="annonce-title-large">
                             <?= htmlspecialchars($annonce['title']) ?>

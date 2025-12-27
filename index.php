@@ -49,12 +49,22 @@ switch($action) {
 
     case 'detail':
         require_once 'controllers/AnnonceDetailController.php';
-        showAnnonceDetail(); // 
+        showAnnonceDetail($pdo); 
         break;
 
     case 'do_delete_annonce':
         require_once 'controllers/AnnonceDetailController.php';
-        doDeleteAnnonce();
+        doDeleteAnnonce($pdo);
+        break;
+    
+    case 'create':
+        require_once 'controllers/AnnonceDetailController.php';
+        showCreateForm($pdo);
+        break;
+
+    case 'do_create_annonce':
+        require_once 'controllers/AnnonceDetailController.php';
+        doCreateAnnonce($pdo);
         break;
         
     default:

@@ -1,5 +1,3 @@
-
-    
 <?php
 // Variables disponibles depuis le contrôleur :
 // $categories (tableau avec id, name, nb_annonces)

@@ -1,13 +1,10 @@
-    <?php
-// Variables disponibles depuis le contrôleur (case 'detail' dans index.php) :
-// $annonce (tableau associatif avec toutes les infos)
+<?php
 
 $pageTitle = htmlspecialchars($annonce['title']) . ' - e-bazar';
 include 'views/components/header.php';
 ?>
 
 <main class="container">
-    <!-- Fil d'Ariane -->
     <div class="breadcrumb">
         <a href="index.php">Accueil</a>
         <span class="separator">›</span>
@@ -19,24 +16,40 @@ include 'views/components/header.php';
     </div>
 
     <div class="annonce-detail-container">
-        <!-- Colonne Gauche : Photos -->
         <div class="annonce-photos">
-            <div class="main-photo">
-                <?php
-                // Pour l'instant pas de photos (Phase 4)
-                ?>
-                <div class="image-placeholder-large">📷</div>
-            </div>
-            <!-- Miniatures (pour Phase 4)
-            <div class="photo-thumbnails">
-                <div class="thumbnail active">
-                    <div class="image-placeholder-small">📷</div>
+    <div class="main-photo">
+        <?php if (!empty($photos)): ?>
+            <img src="public/uploads/<?= htmlspecialchars($photos[0]->getFilename()) ?>" 
+     alt="<?= htmlspecialchars($annonce['title']) ?>"
+     id="main-photo"
+     style="max-width: 100%; height: auto;">
+        <?php else: ?>
+            <div class="image-placeholder-large">📷</div>
+        <?php endif; ?>
+    </div>
+    
+    <?php if (count($photos) > 1): ?>
+        <div class="photo-thumbnails">
+            <?php foreach($photos as $index => $photo): ?>
+                <div class="thumbnail <?= $index === 0 ? 'active' : '' ?>" 
+                     onclick="changeMainPhoto('public/uploads/<?= htmlspecialchars($photo->getFilename()) ?>', this)">
+                    <img src="public/uploads/<?= htmlspecialchars($photo->getFilename()) ?>" 
+                         alt="Photo <?= $index + 1 ?>"
+     style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
-            </div>
-            -->
+            <?php endforeach; ?>
         </div>
+        <!---- a revoir -->
+        <script>
+        function changeMainPhoto(src, thumbnail) {
+            document.getElementById('main-photo').src = src;
+            document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+            thumbnail.classList.add('active');
+        }
+        </script>
+    <?php endif; ?>
+</div>
 
-        <!-- Colonne Droite : Informations -->
         <div class="annonce-info">
             <h1 class="detail-title"><?= htmlspecialchars($annonce['title']) ?></h1>
             
@@ -71,13 +84,9 @@ include 'views/components/header.php';
                 </div>
             </div>
 
-
-            <!-- Actions -->
             <div class="detail-actions">
-                
                     <?php if (isset($_SESSION['user'])): ?>
                         <?php if ($_SESSION['user']['id'] == $annonce['user_id']): ?>
-                            <!-- C'est l'annonce de l'utilisateur connecté -->
                             <p class="info-message">C'est votre annonce</p>
                             <form method="POST" action="index.php?action=do_delete_annonce" 
                                   onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette annonce ?');">
@@ -87,7 +96,6 @@ include 'views/components/header.php';
                                 </button>
                             </form>
                         <?php else: ?>
-                            <!-- Utilisateur connecté, pas son annonce : peut acheter -->
                             <form method="POST" action="index.php?action=purchase">
                                 <input type="hidden" name="annonce_id" value="<?= $annonce['id'] ?>">
                                 <button type="submit" class="btn-buy">
@@ -96,7 +104,6 @@ include 'views/components/header.php';
                             </form>
                         <?php endif; ?>
                     <?php else: ?>
-                        <!-- Utilisateur non connecté -->
                        <form method="POST" action="index.php?action=purchase">
                                 <input type="hidden" name="annonce_id" value="<?= $annonce['id'] ?>">
                                 <button type="submit" class="btn-buy">
