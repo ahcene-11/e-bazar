@@ -6,7 +6,7 @@ include 'views/components/header.php';
 
 <main class="container">
     <div class="breadcrumb">
-        <a href="index.php">  Retour à l'accueil</a>
+        <a href="index.php">Retour à l'accueil</a>
     </div>
 
     <div class="category-header">

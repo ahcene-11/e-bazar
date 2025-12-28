@@ -16,9 +16,8 @@
                 <a href="index.php">Accueil</a>
                 
                 <?php if (isset($_SESSION['user'])): ?>
-                    <a href="index.php?action=dashboard">Mes annonces</a>
                     <a href="index.php?action=create" class="btn-primary-nav">Déposer une annonce</a>
-                    <a href="index.php?action=dashboard"><img src="public/images/icone-utilisateur.png" alt="icone user" class="user-avatar"> <?= htmlspecialchars($_SESSION['user']['email']) ?></a>
+                    <a href="index.php?action=dashboard"><img src="public/images/icone-utilisateur.png" alt="icone user" class="user-avatar">Mon espace </a>
                     
                     <?php if ($_SESSION['user']['role'] === 'admin'): ?>
                         <a href="index.php?action=admin" class="admin-link">⚙️ Admin</a>

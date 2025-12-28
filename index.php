@@ -66,7 +66,27 @@ switch($action) {
         require_once 'controllers/AnnonceDetailController.php';
         doCreateAnnonce($pdo);
         break;
+    //achat
+    case 'purchase':
+        require_once 'controllers/TransactionController.php';
+        showPurchaseConfirm($pdo);
+        break;
+
+    case 'do_purchase':
+        require_once 'controllers/TransactionController.php';
+        doPurchase($pdo);
+        break;
+
+    case 'do_confirm_reception':
+        require_once 'controllers/TransactionController.php';
+        doConfirmReception($pdo);
+        break;
         
+    //dashboards
+    case 'dashboard':
+        require_once 'controllers/DashboardController.php';
+        showDashboard($pdo);
+        break;
     default:
         echo "Page non trouvée";
 }
