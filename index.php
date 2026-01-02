@@ -87,6 +87,33 @@ switch($action) {
         require_once 'controllers/DashboardController.php';
         showDashboard($pdo);
         break;
+    // ========== ADMIN ==========
+    case 'admin':
+        require_once 'controllers/AdminController.php';
+        showAdminDashboard($pdo);
+        break;
+
+    case 'do_delete_user':
+        require_once 'controllers/AdminController.php';
+        doDeleteUser($pdo);
+    break;
+    case 'do_delete_annonce_admin':
+        require_once 'controllers/AdminController.php';
+        doDeleteAnnonceAdmin($pdo);
+        break;
+    case 'do_create_category':
+        require_once 'controllers/AdminController.php';
+        doCreateCategory($pdo);
+        break;
+    case 'do_rename_category':
+        require_once 'controllers/AdminController.php';
+        doRenameCategory($pdo);
+        break;
+    case 'do_delete_category':
+        require_once 'controllers/AdminController.php';
+        doDeleteCategory($pdo);
+        break;
+
     default:
         echo "Page non trouvée";
 }

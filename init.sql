@@ -58,3 +58,14 @@ CREATE TABLE IF NOT EXISTS photos (
     is_primary BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (annonce_id) REFERENCES annonces(id) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS transactions (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    annonce_id INT NOT NULL UNIQUE,
+    buyer_id INT NOT NULL,
+    delivery_mode ENUM('postal', 'hand') NOT NULL,
+    confirmed BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (annonce_id) REFERENCES annonces(id) ON DELETE CASCADE,
+    FOREIGN KEY (buyer_id) REFERENCES users(id) ON DELETE CASCADE
+);

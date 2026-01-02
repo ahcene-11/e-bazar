@@ -61,5 +61,34 @@ class CategoryModel{
         $pre_req= $this->pdo->prepare($req);
         return $pre_req->execute([$newName, $id]);
     }
+    // ========== STATISTIQUES ==========
+
+/**
+ * Compter le nombre d'annonces dans une catégorie
+ * @param int $id
+ * @return int
+ */
+public function countAnnonces($id) {
+    $sql = "SELECT COUNT(*) FROM annonces WHERE category_id = ?";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute([$id]);
+    
+    return $stmt->fetchColumn();
 }
+
+// ========== SUPPRESSION ==========
+
+/**
+ * Supprimer une catégorie
+ * @param int $id
+ * @return bool
+ */
+public function delete($id) {
+    $sql = "DELETE FROM categories WHERE id = ?";
+    $stmt = $this->pdo->prepare($sql);
+    
+    return $stmt->execute([$id]);
+}
+}
+
 ?>

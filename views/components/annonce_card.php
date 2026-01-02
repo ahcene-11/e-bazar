@@ -5,7 +5,7 @@
                  alt="<?= htmlspecialchars($annonce['title']) ?>"
                  style="width: 100%; height: 100%; object-fit: cover;">
         <?php else: ?>
-            <div class="image-placeholder">📷</div>
+            <div class="image-placeholder"><img src="public/images/placeholder.png" alt="placeholder d'image"></div>
         <?php endif; ?>
     </div>
 

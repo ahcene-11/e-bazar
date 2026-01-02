@@ -121,5 +121,28 @@ public function getRecent($limit = 4) {
         
         return $stmt->execute([$id]);
     }
+
+    /**
+ * Récupérer toutes les annonces (pour l'admin)
+ * @param int $limit Limite (optionnel)
+ * @return array Tableau associatif
+ */
+public function getAllForAdmin($limit = 50) {
+    $sql = "SELECT a.*, c.name as category_name, u.email as seller_email
+            FROM annonces a
+            JOIN categories c ON a.category_id = c.id
+            JOIN users u ON a.user_id = u.id
+            ORDER BY a.created_at DESC
+            LIMIT ?"; // On garde le point d'interrogation
+            
+    $stmt = $this->pdo->prepare($sql);
+    
+    // CORRECTION ICI : On force le type Entier
+    $stmt->bindValue(1, $limit, PDO::PARAM_INT);
+    $stmt->execute();
+    
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+}
+
 ?>
