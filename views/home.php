@@ -7,7 +7,7 @@ include 'views/components/header.php';
         <h2>Catégories</h2>
         <div class="categories-grid">
             <?php foreach($categories as $category): ?>
-                <?php include 'views/components/category_card.php'; ?>
+                <?php include 'views/components/category_component.php'; ?>
             <?php endforeach; ?>
         </div>
     </section>
@@ -18,7 +18,7 @@ include 'views/components/header.php';
                 <p class="no-results">Aucune annonce disponible pour le moment.</p>
             <?php else: ?>
                 <?php foreach($recentAnnonces as $annonce): ?>
-                    <?php include 'views/components/annonce_card.php'; ?>
+                    <?php include 'views/components/annonce_component.php'; ?>
                 <?php endforeach; ?>
             <?php endif; ?>
         </div>

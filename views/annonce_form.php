@@ -71,11 +71,11 @@ include 'views/components/header.php';
                 <div class="checkbox-group">
                     <label class="checkbox-label">
                         <input type="checkbox" name="delivery_postal" value="1">
-                        <span>📮 Envoi postal</span>
+                        <span>Envoi postal</span>
                     </label>
                     <label class="checkbox-label">
                         <input type="checkbox" name="delivery_hand" value="1">
-                        <span>🤝 Remise en main propre</span>
+                        <span>Remise en main propre</span>
                     </label>
                 </div>
             </div>

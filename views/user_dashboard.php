@@ -8,14 +8,13 @@ include 'views/components/header.php';
         <h1>Mon espace personnel</h1>
         <section class="dashboard-section">
             <div class="section-header">
-                <h2>📦 Mes annonces en vente (<?= count($myAnnonces) ?>)</h2>
+                <h2>Mes annonces en vente (<?= count($myAnnonces) ?>)</h2>
                 <a href="index.php?action=create" class="btn-primary">+ Nouvelle annonce</a>
             </div>
 
             <?php if (empty($myAnnonces)): ?>
                 <div class="empty-message">
                     <p>Vous n'avez aucune annonce en vente.</p>
-                    <a href="index.php?action=create" class="btn-primary">Déposer une annonce</a>
                 </div>
             <?php else: ?>
                 <div class="dashboard-list">
@@ -29,7 +28,7 @@ include 'views/components/header.php';
                                         alt="<?= htmlspecialchars($annonce['title']) ?>">
                                         
                                 <?php else: ?>
-                                    <div class="image-placeholder-dashboard">📷</div>
+                                    <div class="image-placeholder-dashboard"><img src="public/images/placeholder.png" alt="placeholder d'image" style="width: 100%; height: 100%; object-fit: cover;"></div>
                                 <?php endif; ?>
                             </div>
                             <div class="item-details">
@@ -39,13 +38,13 @@ include 'views/components/header.php';
                                 <p class="item-date">Publié le <?= date('d/m/Y', strtotime($annonce['created_at'])) ?></p>
                             </div>
                             <div class="item-actions">
-                                <a href="index.php?action=detail&id=<?= $annonce['id'] ?>" class="btn-secondary-small">
+                                <a href="index.php?action=detail&id=<?= $annonce['id'] ?>" class="btn-secondary">
                                     Voir
                                 </a>
                                 <form method="POST" action="index.php?action=deleteAnnonce"
                                       onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette annonce ?');">
                                     <input type="hidden" name="annonce_id" value="<?= $annonce['id'] ?>">
-                                    <button type="submit" class="btn-danger-small">Supprimer</button>
+                                    <button type="submit" class="btn-danger">Supprimer</button>
                                 </form>
                             </div>
                         </div>
@@ -55,7 +54,7 @@ include 'views/components/header.php';
         </section>
         <section class="dashboard-section">
             <div class="section-header">
-                <h2>📮 Mes ventes à livrer (<?= count($mySales) ?>)</h2>
+                <h2>Mes ventes à livrer (<?= count($mySales) ?>)</h2>
             </div>
 
             <?php if (empty($mySales)): ?>
@@ -71,7 +70,7 @@ include 'views/components/header.php';
                                     <img src="public/uploads/<?= htmlspecialchars($sale['photo_filename']) ?>"
                                         alt="<?= htmlspecialchars($sale['title']) ?>">
                                 <?php else: ?>
-                                    <div class="image-placeholder-dashboard">📷</div>
+                                    <div class="image-placeholder-dashboard"><img src="public/images/placeholder.png" alt="placeholder d'image" style="width: 100%; height: 100%; object-fit: cover;"></div>
                                 <?php endif; ?>
                             </div>
                             <div class="item-details">
@@ -79,13 +78,13 @@ include 'views/components/header.php';
                                 <p class="item-price"><?= number_format($sale['price'], 2, ',', ' ') ?> €</p>
                                 <p class="item-buyer">Acheteur : <?= htmlspecialchars($sale['buyer_email']) ?></p>
                                 <p class="item-delivery">
-                                    Mode : <?= $sale['delivery_mode'] === 'postal' ? '📮 Envoi postal' : '🤝 Remise en main propre' ?>
+                                    Mode : <?= $sale['delivery_mode'] === 'postal' ? ' Envoi postal' : ' Remise en main propre' ?>
                                 </p>
                                 <p class="item-status">
                                     <?php if ($sale['confirmed']): ?>
                                         <span class="status-badge status-confirmed"> Réception confirmée</span>
                                     <?php else: ?>
-                                        <span class="status-badge status-pending">⏳ En attente de confirmation</span>
+                                        <span class="status-badge status-pending">En attente de confirmation</span>
                                     <?php endif; ?>
                                 </p>
                             </div>
@@ -98,7 +97,7 @@ include 'views/components/header.php';
         <!-- Section : Mes achats -->
         <section class="dashboard-section">
             <div class="section-header">
-                <h2>🛒 Mes achats (<?= count($myPurchases) ?>)</h2>
+                <h2>Mes achats (<?= count($myPurchases) ?>)</h2>
             </div>
 
             <?php if (empty($myPurchases)): ?>
@@ -115,7 +114,7 @@ include 'views/components/header.php';
                                     <img src="public/uploads/<?= htmlspecialchars($purchase['photo_filename']) ?>"
                                         alt="<?= htmlspecialchars($purchase['title']) ?>">
                                 <?php else: ?>
-                                    <div class="image-placeholder-dashboard">📷</div>
+                                    <div class="image-placeholder-dashboard"><img src="public/images/placeholder.png" alt="placeholder d'image" style="width: 100%; height: 100%; object-fit: cover;"></div>
                                 <?php endif; ?>
                             </div>
                             <div class="item-details">
@@ -123,7 +122,7 @@ include 'views/components/header.php';
                                 <p class="item-price"><?= number_format($purchase['price'], 2, ',', ' ') ?> €</p>
                                 <p class="item-seller">Vendeur : <?= htmlspecialchars($purchase['seller_email']) ?></p>
                                 <p class="item-delivery">
-                                    Mode : <?= $purchase['delivery_mode'] === 'postal' ? '📮 Envoi postal' : '🤝 Remise en main propre' ?>
+                                    Mode : <?= $purchase['delivery_mode'] === 'postal' ? 'Envoi postal' : ' Remise en main propre' ?>
                                 </p>
                                 <p class="item-date">Acheté le <?= date('d/m/Y', strtotime($purchase['created_at'])) ?></p>
                             </div>
@@ -132,7 +131,7 @@ include 'views/components/header.php';
                                     <form method="POST" action="index.php?action=confirmReception"
                                           onsubmit="return confirm('Confirmez-vous avoir bien reçu ce bien ?');">
                                         <input type="hidden" name="annonce_id" value="<?= $purchase['annonce_id'] ?>">
-                                        <button type="submit" class="btn-success-small">
+                                        <button type="submit" class="btn-buy">
                                              Confirmer la réception
                                         </button>
                                     </form>

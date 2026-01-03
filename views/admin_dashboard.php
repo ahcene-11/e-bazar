@@ -40,7 +40,7 @@ include 'views/components/header.php';
                                 <td class="actions-cell">
                                     <button 
                                         onclick="showRenameForm(<?= $category['id'] ?>, '<?= htmlspecialchars($category['name'], ENT_QUOTES) ?>')" 
-                                        class="btn-edit">
+                                        class="btn-secondary">
                                         Renommer
                                     </button>
                                     
@@ -48,7 +48,7 @@ include 'views/components/header.php';
                                         <form method="POST" action="index.php?action=deleteCategory" style="display: inline;"
                                               onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette catégorie ?');">
                                             <input type="hidden" name="category_id" value="<?= $category['id'] ?>">
-                                            <button type="submit" class="btn-delete"> Supprimer</button>
+                                            <button type="submit" class="btn-danger"> Supprimer</button>
                                         </form>
                                     <?php else: ?>
                                         <span class="text-muted" title="Impossible de supprimer une catégorie avec des annonces">
@@ -77,7 +77,7 @@ include 'views/components/header.php';
                                     <img src="public/uploads/<?= htmlspecialchars($annonce['primary_photo_filename']) ?>" 
                                          alt="<?= htmlspecialchars($annonce['title']) ?>">
                                 <?php else: ?>
-                                    <div class="image-placeholder-tiny">📷</div>
+                                    <div class="image-placeholder-tiny"><img src="public/images/placeholder.png" alt="placeholder d'image" style="width: 100%; height: 100%; object-fit: cover;"></div>
                                 <?php endif; ?>
                             </div>
                             <div class="item-info-admin">
@@ -106,13 +106,13 @@ include 'views/components/header.php';
                             </div>
                             <div class="item-actions-admin">
                                 <a href="index.php?action=detail&id=<?= $annonce['id'] ?>" 
-                                   class="btn-view" target="_blank">
+                                   class="btn-secondary">
                                      Voir
                                 </a>
                                 <form method="POST" action="index.php?action=deleteAnnonceAdmin"
                                       onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette annonce ?');">
                                     <input type="hidden" name="annonce_id" value="<?= $annonce['id'] ?>">
-                                    <button type="submit" class="btn-delete"> Supprimer</button>
+                                    <button type="submit" class="btn-danger"> Supprimer</button>
                                 </form>
                             </div>
                         </div>
@@ -130,7 +130,6 @@ include 'views/components/header.php';
                             <th>ID</th>
                             <th>Email</th>
                             <th>Rôle</th>
-                            <th>Nb d'annonces</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -146,7 +145,6 @@ include 'views/components/header.php';
                                         <span class="badge-user">Utilisateur</span>
                                     <?php endif; ?>
                                 </td>
-                                <td><?= $userCounts[$user->getId()] ?? 0 ?></td>
                                 
                                 <td class="actions-cell">
                                     <?php if ($user->getId() == $_SESSION['user']['id']): ?>
@@ -157,7 +155,7 @@ include 'views/components/header.php';
                                         <form method="POST" action="index.php?action=deleteUser"
                                               onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ? Toutes ses annonces seront supprimées.');">
                                             <input type="hidden" name="user_id" value="<?= $user->getId() ?>">
-                                            <button type="submit" class="btn-delete"> Supprimer</button>
+                                            <button type="submit" class="btn-danger"> Supprimer</button>
                                         </form>
                                     <?php endif; ?>
                                 </td>

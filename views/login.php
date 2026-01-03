@@ -10,6 +10,7 @@
         <?php endif; ?>
 
         <form action="index.php?action=login" method="POST">
+        <div class="form-group">
         <h2>Connexion</h2>
             <label>Email:
                 <input type="email" name="email" required>
@@ -19,7 +20,8 @@
                 <input type="password" name="password" required>
             </label>
             
-            <button type="submit">Se connecter</button>
+            <button type="submit" class=btn-primary>Se connecter</button>
+        </div>
         </form>
         </div>
     </main>

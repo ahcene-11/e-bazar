@@ -14,7 +14,7 @@ include 'views/components/header.php';
                         <img src="public/uploads/<?= htmlspecialchars($primaryPhoto->getFilename()) ?>"
                             alt="<?= htmlspecialchars($annonce['title']) ?>">
                     <?php else: ?>
-                        <div class="image-placeholder-small">📷</div>
+                        <div class="image-placeholder-small"><img src="public/images/placeholder.png" alt="placeholder d'image" style="width: 100%; height: 100%; object-fit: cover;"></div>
                     <?php endif; ?>
                 </div>
                 <div class="summary-details">

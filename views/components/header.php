@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $pageTitle ?? 'e-bazar' ?></title>
-    <link rel="stylesheet" href="public/css/style.css">
+    <link rel="stylesheet" href="public/css/styles.css">
 </head>
 <body>
     <header class="navbar">
@@ -20,7 +20,7 @@
                         <a href="index.php?action=dashboard"><img src="public/images/icone-utilisateur.png" alt="icone user" class="user-avatar">Mon espace </a>
                     <?php endif; ?>
                     <?php if ($_SESSION['user']['role'] === 'admin'): ?>
-                        <a href="index.php?action=admin" class="admin-link">Admin</a>
+                        <a href="index.php?action=admin" class="btn-primary-nav">Admin</a>
                     <?php endif; ?>
                     
                     <a href="index.php?action=logout">Déconnexion</a>

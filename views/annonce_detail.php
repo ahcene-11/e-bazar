@@ -24,7 +24,7 @@ include 'views/components/header.php';
      id="main-photo"
      style="max-width: 100%; height: auto;">
         <?php else: ?>
-            <div class="image-placeholder-large">📷</div>
+            <div class="image-placeholder-large"><img src="public/images/placeholder.png" alt="placeholder d'image" style="width: 100%; height: 100%; object-fit: cover;"></div>
         <?php endif; ?>
     </div>
     

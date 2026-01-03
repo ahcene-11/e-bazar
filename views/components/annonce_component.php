@@ -5,7 +5,7 @@
                  alt="<?= htmlspecialchars($annonce['title']) ?>"
                  style="width: 100%; height: 100%; object-fit: cover;">
         <?php else: ?>
-            <div class="image-placeholder"><img src="public/images/placeholder.png" alt="placeholder d'image"></div>
+            <div class="image-placeholder"><img src="public/images/placeholder.png" alt="placeholder d'image" style="width: 100%; height: 100%; object-fit: cover;"></div>
         <?php endif; ?>
     </div>
 
@@ -27,7 +27,7 @@
         </p>
         
         <a href="index.php?action=detail&id=<?= $annonce['id'] ?>" class="btn-primary">
-            Voir le détail →
+            Voir le détail
         </a>
     </div>
 </div>

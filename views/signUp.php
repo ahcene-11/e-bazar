@@ -5,6 +5,7 @@
     ?>
     <div class="form-container">
     <form action="index.php?action=register" method="POST">
+        <div class="form-group">
     <h2>Inscription</h2>
     <label >
         Email:
@@ -14,8 +15,8 @@
         Mot de passe:
         <input type="password" name="password" required>
     </label>
-    <button type="submit">S'inscrire</button>
-
+    <button type="submit" class="btn-primary">S'inscrire</button>
+    </div>
     </form>
     </div>
 </body>

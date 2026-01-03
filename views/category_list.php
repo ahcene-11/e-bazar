@@ -18,12 +18,11 @@ include 'views/components/header.php';
 
     <?php if (empty($annonces)): ?>
         <div class="empty-state">
-            <p class="empty-icon">📦</p>
+            <p class="empty-icon"><img src="public/images/vide.png" alt="image pour exprimer l'absence d'annonces" style="width: 30%; height: 30%; object-fit: cover;"></p>
             <h2>Aucune annonce dans cette catégorie</h2>
             <p>Soyez le premier à déposer une annonce !</p>
-            <?php if (isset($_SESSION['user'])): ?>
+            
                 <a href="index.php?action=create" class="btn-primary">Déposer une annonce</a>
-            <?php endif; ?>
         </div>
     <?php else: ?>
         <div class="annonces-list">
@@ -35,7 +34,7 @@ include 'views/components/header.php';
              alt="<?= htmlspecialchars($annonce['title']) ?>"
              style="width: 100%; height: 100%; object-fit: cover;">
     <?php else: ?>
-        <div class="image-placeholder">📷</div>
+        <div class="image-placeholder"><img src="public/images/placeholder.png" alt="placeholder d'image" style="width: 100%; height: 100%; object-fit: cover;"></div>
     <?php endif; ?>
 </div>
                     <div class="annonce-details">
@@ -51,14 +50,14 @@ include 'views/components/header.php';
                         </p>
                         <div class="annonce-meta">
                             <span class="meta-date">
-                                📅 <?= date('d/m/Y', strtotime($annonce['created_at'])) ?>
+                                <img src="public/images/date.png" alt="date de annonce" class="petite-icone" > <?= date('d/m/Y', strtotime($annonce['created_at'])) ?>
                             </span>
                             <span class="meta-delivery">
                                 <?php if ($annonce['delivery_postal']): ?>
-                                    📮 Envoi postal
+                                    <img src="public/images/envoyer.png" alt="envoi postal" class="petite-icone" > Envoi postal
                                 <?php endif; ?>
                                 <?php if ($annonce['delivery_hand']): ?>
-                                    🤝 Remise en main propre
+                                    <img src="public/images/achats.png" alt="remise en main propre" class="petite-icone" > Remise en main propre
                                 <?php endif; ?>
                             </span>
                         </div>
