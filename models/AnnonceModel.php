@@ -9,13 +9,11 @@ class AnnonceModel {
     }
     
 public function getRecent($limit = 4) {
-    // 1. On ajoute p.filename
     $sql = "SELECT a.*, c.name as category_name, u.email as seller_email, 
                    p.filename as photo_filename
             FROM annonces a
             JOIN categories c ON a.category_id = c.id
             JOIN users u ON a.user_id = u.id
-            -- 2. On joint la table photos, mais seulement pour la photo principale
             LEFT JOIN photos p ON a.id = p.annonce_id AND p.is_primary = 1
             WHERE a.status = 'available'
             ORDER BY a.created_at DESC
@@ -42,8 +40,6 @@ public function getRecent($limit = 4) {
     
    public function getByCategory($categoryId, $page = 1, $perPage = 10) {
     $offset = ($page - 1) * $perPage;
-    
-    // Modification ici : ajout de p.filename et du LEFT JOIN
     $sql = "SELECT a.*, c.name as category_name, p.filename as photo_filename
             FROM annonces a
             JOIN categories c ON a.category_id = c.id
@@ -122,27 +118,20 @@ public function getRecent($limit = 4) {
         return $stmt->execute([$id]);
     }
 
-    /**
- * Récupérer toutes les annonces (pour l'admin)
- * @param int $limit Limite (optionnel)
- * @return array Tableau associatif
- */
-public function getAllForAdmin($limit = 50) {
-    $sql = "SELECT a.*, c.name as category_name, u.email as seller_email
-            FROM annonces a
-            JOIN categories c ON a.category_id = c.id
-            JOIN users u ON a.user_id = u.id
-            ORDER BY a.created_at DESC
-            LIMIT ?"; // On garde le point d'interrogation
-            
-    $stmt = $this->pdo->prepare($sql);
-    
-    // CORRECTION ICI : On force le type Entier
-    $stmt->bindValue(1, $limit, PDO::PARAM_INT);
-    $stmt->execute();
-    
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
+    public function getAllForAdmin($limit = 50) {
+        $sql = "SELECT a.*, c.name as category_name, u.email as seller_email
+                FROM annonces a
+                JOIN categories c ON a.category_id = c.id
+                JOIN users u ON a.user_id = u.id
+                ORDER BY a.created_at DESC
+                LIMIT ?"; 
+                
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(1, $limit, PDO::PARAM_INT);
+        $stmt->execute();
+        
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 
 ?>

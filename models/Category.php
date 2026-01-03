@@ -15,7 +15,6 @@ class Category {
     public function getName(){
         return $this->name;
     }
-    //UTILS
     public function toArray(){
         return [
             'id' => $this->id,

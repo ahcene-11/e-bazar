@@ -16,16 +16,16 @@
                 <a href="index.php">Accueil</a>
                 
                 <?php if (isset($_SESSION['user'])): ?>
-                    <a href="index.php?action=create" class="btn-primary-nav">Déposer une annonce</a>
-                    <a href="index.php?action=dashboard"><img src="public/images/icone-utilisateur.png" alt="icone user" class="user-avatar">Mon espace </a>
-                    
+                    <?php if ($_SESSION['user']['role'] === 'user'): ?>
+                        <a href="index.php?action=dashboard"><img src="public/images/icone-utilisateur.png" alt="icone user" class="user-avatar">Mon espace </a>
+                    <?php endif; ?>
                     <?php if ($_SESSION['user']['role'] === 'admin'): ?>
-                        <a href="index.php?action=admin" class="admin-link">⚙️ Admin</a>
+                        <a href="index.php?action=admin" class="admin-link">Admin</a>
                     <?php endif; ?>
                     
                     <a href="index.php?action=logout">Déconnexion</a>
                 <?php else: ?>
-                    <a href="index.php?action=login">Connexion</a>
+                    <a href="index.php?action=loginForm">Connexion</a>
                     <a href="index.php?action=signUp" class="btn-primary-nav">Inscription</a>
                 <?php endif; ?>
             </nav>

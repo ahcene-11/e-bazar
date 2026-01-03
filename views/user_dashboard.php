@@ -1,19 +1,11 @@
 <?php
-// Variables disponibles :
-// $myAnnonces (mes annonces en vente)
-// $mySales (mes ventes à livrer)
-// $myPurchases (mes achats)
-
 $pageTitle = 'Mon espace personnel - e-bazar';
 include 'views/components/header.php';
-
 ?>
 
 <main class="container">
     <div class="dashboard-container">
         <h1>Mon espace personnel</h1>
-
-        <!-- Section : Mes annonces en vente -->
         <section class="dashboard-section">
             <div class="section-header">
                 <h2>📦 Mes annonces en vente (<?= count($myAnnonces) ?>)</h2>
@@ -50,7 +42,7 @@ include 'views/components/header.php';
                                 <a href="index.php?action=detail&id=<?= $annonce['id'] ?>" class="btn-secondary-small">
                                     Voir
                                 </a>
-                                <form method="POST" action="index.php?action=do_delete_annonce"
+                                <form method="POST" action="index.php?action=deleteAnnonce"
                                       onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette annonce ?');">
                                     <input type="hidden" name="annonce_id" value="<?= $annonce['id'] ?>">
                                     <button type="submit" class="btn-danger-small">Supprimer</button>
@@ -61,8 +53,6 @@ include 'views/components/header.php';
                 </div>
             <?php endif; ?>
         </section>
-
-        <!-- Section : Mes ventes à livrer -->
         <section class="dashboard-section">
             <div class="section-header">
                 <h2>📮 Mes ventes à livrer (<?= count($mySales) ?>)</h2>
@@ -139,7 +129,7 @@ include 'views/components/header.php';
                             </div>
                             <div class="item-actions">
                                 <?php if (!$purchase['confirmed']): ?>
-                                    <form method="POST" action="index.php?action=do_confirm_reception"
+                                    <form method="POST" action="index.php?action=confirmReception"
                                           onsubmit="return confirm('Confirmez-vous avoir bien reçu ce bien ?');">
                                         <input type="hidden" name="annonce_id" value="<?= $purchase['annonce_id'] ?>">
                                         <button type="submit" class="btn-success-small">

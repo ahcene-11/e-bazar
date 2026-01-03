@@ -1,13 +1,8 @@
 <?php
-// Variables disponibles depuis le contrôleur :
-// $categories (tableau avec id, name, nb_annonces)
-// $recentAnnonces (tableau avec toutes les infos)
-
 $pageTitle = 'Accueil - e-bazar';
 include 'views/components/header.php';
 ?>
     <main class="container">
-    <!-- Section Catégories -->
     <section class="section-categories">
         <h2>Catégories</h2>
         <div class="categories-grid">
@@ -16,8 +11,6 @@ include 'views/components/header.php';
             <?php endforeach; ?>
         </div>
     </section>
-
-    <!-- Section Dernières annonces -->
     <section class="section-recent">
         <h2>Dernières annonces</h2>
         <div class="annonces-grid">

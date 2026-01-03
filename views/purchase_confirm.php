@@ -1,7 +1,4 @@
 <?php
-// Variables disponibles :
-// $annonce (tableau associatif)
-
 $pageTitle = 'Confirmer l\'achat - e-bazar';
 include 'views/components/header.php';
 ?>
@@ -9,8 +6,6 @@ include 'views/components/header.php';
 <main class="container">
     <div class="purchase-container">
         <h1>Confirmer l'achat</h1>
-
-        <!-- Récapitulatif de l'annonce -->
         <div class="purchase-summary">
             <h2>Récapitulatif</h2>
             <div class="summary-item">
@@ -29,9 +24,7 @@ include 'views/components/header.php';
                 </div>
             </div>
         </div>
-
-        <!-- Formulaire de confirmation -->
-        <form action="index.php?action=do_purchase" method="POST" class="purchase-form">
+        <form action="index.php?action=purchase" method="POST" class="purchase-form">
             <input type="hidden" name="annonce_id" value="<?= $annonce['id'] ?>">
 
             <div class="form-group">

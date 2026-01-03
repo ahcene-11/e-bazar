@@ -2,7 +2,7 @@
 require_once 'models/CategoryModel.php';
 require_once 'models/AnnonceModel.php';
 
-function showCategoryList() {
+function categoryList() {
     global $pdo;
     $categoryId = $_GET['id'] ?? 0;
     $page = $_GET['page'] ?? 1;

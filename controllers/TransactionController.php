@@ -4,19 +4,17 @@ require_once 'models/AnnonceModel.php';
 require_once 'models/CategoryModel.php';
 require_once 'models/PhotoModel.php';
 
-/**
- * Afficher la page de confirmation d'achat
- */
-function showPurchaseConfirm($pdo) {
-    // Vérifier que l'utilisateur est connecté
-    if (!isset($_SESSION['user'])) {
-        $_SESSION['error'] = "Vous devez être connecté pour acheter";
-        header('Location: index.php?action=login');
+
+function purchaseConfirm($pdo) {
+    $requestedId = $_POST['annonce_id'] ?? $_GET['id'] ?? 0;
+if (!isset($_SESSION['user'])) {
+        $_SESSION['pending_purchase_id'] = $requestedId;
+        
+        header('Location: index.php?action=signUp');
         exit;
     }
-
-    $annonceId = $_POST['annonce_id'] ?? 0;
-
+    $annonceId = $requestedId;
+    
     $annonceModel = new AnnonceModel($pdo);
     $annonce = $annonceModel->getById($annonceId);
 
@@ -25,15 +23,11 @@ function showPurchaseConfirm($pdo) {
         header('Location: index.php');
         exit;
     }
-
-    // Vérifier que l'annonce est disponible
     if ($annonce['status'] !== 'available') {
         $_SESSION['error'] = "Cette annonce n'est plus disponible";
         header('Location: index.php?action=detail&id=' . $annonceId);
         exit;
     }
-
-    // Vérifier que ce n'est pas sa propre annonce
     if ($annonce['user_id'] == $_SESSION['user']['id']) {
         $_SESSION['error'] = "Vous ne pouvez pas acheter votre propre annonce";
         header('Location: index.php?action=detail&id=' . $annonceId);
@@ -45,22 +39,16 @@ function showPurchaseConfirm($pdo) {
     include 'views/purchase_confirm.php';
 }
 
-/**
- * Traiter l'achat d'une annonce
- */
-function doPurchase($pdo) {
-    // Vérifier que l'utilisateur est connecté
+function purchase($pdo) {
     if (!isset($_SESSION['user'])) {
         $_SESSION['error'] = "Vous devez être connecté";
-        header('Location: index.php?action=login');
+        header('Location: index.php?action=loginForm');
         exit;
     }
 
     $annonceId = $_POST['annonce_id'] ?? 0;
     $deliveryMode = $_POST['delivery_mode'] ?? '';
     $buyerId = $_SESSION['user']['id'];
-
-    // Validation
     if (!in_array($deliveryMode, ['postal', 'hand'])) {
         $_SESSION['error'] = "Mode de livraison invalide";
         header('Location: index.php?action=detail&id=' . $annonceId);
@@ -69,8 +57,6 @@ function doPurchase($pdo) {
 
     $annonceModel = new AnnonceModel($pdo);
     $annonce = $annonceModel->getById($annonceId);
-
-    // Vérifications
     if (!$annonce) {
         $_SESSION['error'] = "Annonce introuvable";
         header('Location: index.php');
@@ -88,21 +74,17 @@ function doPurchase($pdo) {
         header('Location: index.php?action=detail&id=' . $annonceId);
         exit;
     }
-
-    // Vérifier que le mode de livraison est accepté par le vendeur
     if ($deliveryMode === 'postal' && !$annonce['delivery_postal']) {
         $_SESSION['error'] = "L'envoi postal n'est pas accepté pour cette annonce";
-        header('Location: index.php?action=purchase');
+        header('Location: index.php?action=purchaseConfirm');
         exit;
     }
 
     if ($deliveryMode === 'hand' && !$annonce['delivery_hand']) {
         $_SESSION['error'] = "La remise en main propre n'est pas acceptée pour cette annonce";
-        header('Location: index.php?action=purchase');
+        header('Location: index.php?action=purchaseConfirm');
         exit;
     }
-
-    // Créer la transaction
     $transactionModel = new TransactionModel($pdo);
     $transactionId = $transactionModel->create($annonceId, $buyerId, $deliveryMode);
 
@@ -111,8 +93,6 @@ function doPurchase($pdo) {
         header('Location: index.php?action=detail&id=' . $annonceId);
         exit;
     }
-
-    // Mettre à jour le statut de l'annonce
     $annonceModel->updateStatus($annonceId, 'sold');
 
     $_SESSION['success'] = "Achat effectué avec succès ! Le vendeur va préparer la livraison.";
@@ -120,14 +100,10 @@ function doPurchase($pdo) {
     exit;
 }
 
-/**
- * Confirmer la réception d'un bien
- */
-function doConfirmReception($pdo) {
-    // Vérifier que l'utilisateur est connecté
+function confirmReception($pdo) {
     if (!isset($_SESSION['user'])) {
         $_SESSION['error'] = "Vous devez être connecté";
-        header('Location: index.php?action=login');
+        header('Location: index.php?action=loginForm');
         exit;
     }
 
@@ -136,8 +112,6 @@ function doConfirmReception($pdo) {
 
     $transactionModel = new TransactionModel($pdo);
     $transaction = $transactionModel->getByAnnonce($annonceId);
-
-    // Vérifications
     if (!$transaction) {
         $_SESSION['error'] = "Transaction introuvable";
         header('Location: index.php?action=dashboard');
@@ -155,8 +129,6 @@ function doConfirmReception($pdo) {
         header('Location: index.php?action=dashboard');
         exit;
     }
-
-    // Confirmer la réception
     if ($transactionModel->confirmReception($annonceId)) {
         $_SESSION['success'] = "Réception confirmée ! La transaction est terminée.";
     } else {

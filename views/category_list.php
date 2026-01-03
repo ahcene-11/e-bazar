@@ -69,8 +69,6 @@ include 'views/components/header.php';
                 </div>
             <?php endforeach; ?>
         </div>
-
-        <!-- Pagination -->
         <?php if ($totalPages > 1): ?>
             <div class="pagination">
                 <?php if ($currentPage > 1): ?>

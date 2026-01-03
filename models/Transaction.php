@@ -1,7 +1,4 @@
 <?php
-/**
- * Classe Transaction - Représente une transaction d'achat
- */
 class Transaction {
     private $id;
     private $annonceId;
@@ -18,9 +15,6 @@ class Transaction {
         $this->confirmed = $confirmed;
         $this->createdAt = $createdAt;
     }
-
-    // ========== GETTERS ==========
-
     public function getId() {
         return $this->id;
     }

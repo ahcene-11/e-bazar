@@ -1,119 +1,90 @@
 <?php
 session_start();
 require_once 'config.php';
-
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-
-// Récupérer l'action demandée dans l'URL
-// Ex: index.php?action=login ou juste index.php
 $action = $_GET['action'] ?? 'home';
-
-// Router simple : selon l'action, on inclut la bonne vue
 switch($action) {
     case 'home':
         require_once 'controllers/HomeController.php';
         showHome();
         break;
-    
-    case 'login':
+    case 'loginForm':
         include 'views/login.php';
         break;
-
     case 'signUp':
         include 'views/signUp.php';
         break;
-
-    case 'do_login':
+    case 'login':
         include 'controllers/UserController.php';
-        doLogin(); // fonction dans le controller
+        login();
         break;
-
-    case 'do_signUp':
+    case 'register':
         include 'controllers/UserController.php';
-        do_signUp(); // fonction dans le controller
+        register();
         break;
-
     case 'logout':
         session_destroy();
         header('Location: index.php');
         break;
-
     case 'category':
-        require_once 'controllers/CategoryListController.php';
-        showCategoryList(); 
+        require_once 'controllers/CategoryController.php';
+        categoryList(); 
         break;
-
     case 'detail':
-        require_once 'controllers/AnnonceDetailController.php';
-        showAnnonceDetail($pdo); 
+        require_once 'controllers/AnnonceController.php';
+        annonceDetail($pdo); 
         break;
-
-    case 'do_delete_annonce':
-        require_once 'controllers/AnnonceDetailController.php';
-        doDeleteAnnonce($pdo);
-        break;
-    
+    case 'deleteAnnonce':
+        require_once 'controllers/AnnonceController.php';
+        deleteAnnonce($pdo);
+        break; 
     case 'create':
-        require_once 'controllers/AnnonceDetailController.php';
-        showCreateForm($pdo);
+        require_once 'controllers/AnnonceController.php';
+        createForm($pdo);
         break;
-
-    case 'do_create_annonce':
-        require_once 'controllers/AnnonceDetailController.php';
-        doCreateAnnonce($pdo);
+    case 'createAnnonce':
+        require_once 'controllers/AnnonceController.php';
+        createAnnonce($pdo);
         break;
-    //achat
+    case 'purchaseConfirm':
+        require_once 'controllers/TransactionController.php';
+        purchaseConfirm($pdo);
+        break;
     case 'purchase':
         require_once 'controllers/TransactionController.php';
-        showPurchaseConfirm($pdo);
+        purchase($pdo);
         break;
-
-    case 'do_purchase':
+    case 'confirmReception':
         require_once 'controllers/TransactionController.php';
-        doPurchase($pdo);
+        confirmReception($pdo);
         break;
-
-    case 'do_confirm_reception':
-        require_once 'controllers/TransactionController.php';
-        doConfirmReception($pdo);
-        break;
-        
-    //dashboards
     case 'dashboard':
-        require_once 'controllers/DashboardController.php';
+        require_once 'controllers/UserController.php';
         showDashboard($pdo);
         break;
-    // ========== ADMIN ==========
     case 'admin':
         require_once 'controllers/AdminController.php';
-        showAdminDashboard($pdo);
+        adminDashboard($pdo);
         break;
-
-    case 'do_delete_user':
+    case 'deleteUser':
         require_once 'controllers/AdminController.php';
-        doDeleteUser($pdo);
+        deleteUser($pdo);
     break;
-    case 'do_delete_annonce_admin':
+    case 'deleteAnnonceAdmin':
         require_once 'controllers/AdminController.php';
-        doDeleteAnnonceAdmin($pdo);
+        deleteAnnonceAdmin($pdo);
         break;
-    case 'do_create_category':
+    case 'createCategory':
         require_once 'controllers/AdminController.php';
-        doCreateCategory($pdo);
+        createCategory($pdo);
         break;
-    case 'do_rename_category':
+    case 'renameCategory':
         require_once 'controllers/AdminController.php';
-        doRenameCategory($pdo);
+       renameCategory($pdo);
         break;
-    case 'do_delete_category':
+    case 'deleteCategory':
         require_once 'controllers/AdminController.php';
-        doDeleteCategory($pdo);
+        deleteCategory($pdo);
         break;
-
     default:
         echo "Page non trouvée";
 }

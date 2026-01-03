@@ -6,10 +6,8 @@ include 'views/components/header.php';
 
 <main class="container">
     <div class="forma-container">
-        <h1>Déposer une annonce</h1>
-        
-        <form action="index.php?action=do_create_annonce" method="POST" enctype="multipart/form-data" class="annonce-form">
-            
+        <h1>Déposer une annonce</h1>     
+        <form action="index.php?action=createAnnonce" method="POST" enctype="multipart/form-data" class="annonce-form">
             <div class="form-group">
                 <label for="category_id" class="required">Catégorie</label>
                 <select name="category_id" id="category_id" required>
@@ -144,6 +142,16 @@ document.getElementById('photos').addEventListener('change', function() {
             preview.appendChild(div);
         };
         reader.readAsDataURL(file);
+    }
+});
+document.querySelector('.annonce-form').addEventListener('submit', function(event) {
+
+    const postal = document.querySelector('input[name="delivery_postal"]').checked;
+    const hand = document.querySelector('input[name="delivery_hand"]').checked;
+
+    if (!postal && !hand) {
+        event.preventDefault(); 
+        alert("Veuillez sélectionner au moins un mode de livraison (Envoi postal ou Remise en main propre).");
     }
 });
 </script>

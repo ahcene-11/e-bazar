@@ -88,15 +88,19 @@ include 'views/components/header.php';
                     <?php if (isset($_SESSION['user'])): ?>
                         <?php if ($_SESSION['user']['id'] == $annonce['user_id']): ?>
                             <p class="info-message">C'est votre annonce</p>
-                            <form method="POST" action="index.php?action=do_delete_annonce" 
+                            <form method="POST" action="index.php?action=deleteAnnonce" 
                                   onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette annonce ?');">
                                 <input type="hidden" name="annonce_id" value="<?= $annonce['id'] ?>">
                                 <button type="submit" class="btn-danger">
                                     Supprimer l'annonce
                                 </button>
                             </form>
+
+                        <?php elseif ($_SESSION['user']['role'] === 'admin'): ?>
+                        <p class="info-message">Vous ne pouvez pas acheter en tant qu'admin</p>
+                        
                         <?php else: ?>
-                            <form method="POST" action="index.php?action=purchase">
+                            <form method="POST" action="index.php?action=purchaseConfirm">
                                 <input type="hidden" name="annonce_id" value="<?= $annonce['id'] ?>">
                                 <button type="submit" class="btn-buy">
                                     Acheter
@@ -104,7 +108,7 @@ include 'views/components/header.php';
                             </form>
                         <?php endif; ?>
                     <?php else: ?>
-                       <form method="POST" action="index.php?action=purchase">
+                       <form method="POST" action="index.php?action=purchaseConfirm">
                                 <input type="hidden" name="annonce_id" value="<?= $annonce['id'] ?>">
                                 <button type="submit" class="btn-buy">
                                     Acheter

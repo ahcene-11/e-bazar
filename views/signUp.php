@@ -4,9 +4,8 @@
     include_once 'views/components/header.php';
     ?>
     <div class="form-container">
-    <form action="index.php?action=do_signUp" method="POST">
+    <form action="index.php?action=register" method="POST">
     <h2>Inscription</h2>
-
     <label >
         Email:
         <input type="email" name="email" required>

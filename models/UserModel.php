@@ -1,9 +1,6 @@
 <?php
 require_once 'models/User.php';
 
-/**
- * Classe UserModel - Gère l'accès aux données des utilisateurs dans la BDD
- */
 class UserModel {
     private $pdo;
     
@@ -14,7 +11,7 @@ class UserModel {
     public function create($email, $password, $role = 'user') {
         
         if ($this->getByEmail($email)) {
-            return false; // Email déjà utilisé
+            return false; 
         }
         
         
@@ -92,9 +89,6 @@ class UserModel {
     
 
     public function delete($id) {
-        // Note: Il faudrait aussi supprimer ses annonces et photos
-        // ou utiliser des contraintes CASCADE dans la BDD
-        
         $sql = "DELETE FROM users WHERE id = ?";
         $pre_req = $this->pdo->prepare($sql);
         

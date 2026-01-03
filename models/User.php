@@ -11,26 +11,18 @@ class User {
         $this->email = $email;
         $this->role = $role;
     }
-
-
     public function getId() {
         return $this->id;
     }
-
     public function getEmail() {
         return $this->email;
     }
-
     public function getRole() {
         return $this->role;
     }
-
-    //UTILS
     public function isAdmin() {
         return $this->role === 'admin';
     }
-
-
     public function toArray() {
         return [
             'id' => $this->id,
@@ -38,7 +30,6 @@ class User {
             'role' => $this->role
         ];
     }
-
     public static function fromArray($data) {
         return new User(
             $data['id'],

@@ -1,5 +1,3 @@
--- Le prof copie/colle ce fichier dans phpMyAdmin onglet SQL
-
 CREATE TABLE IF NOT EXISTS users (
     id INT PRIMARY KEY AUTO_INCREMENT,
     email VARCHAR(255) UNIQUE NOT NULL,
@@ -41,8 +39,8 @@ INSERT INTO categories (name) VALUES
 ('Sports & Loisirs');
 
 INSERT INTO users (email, password, role) VALUES
-('admin@test.com', '$2y$10$abcdefghijklmnopqrstuv', 'admin'),
-('user@test.com', '$2y$10$abcdefghijklmnopqrstuv', 'user');
+('admin@test.com', '$2y$10$2gP4lqtakPDslh0pR4G3qOt1ScHtjdlCkfQl2T7NDwRtDJPPodEn6', 'admin'),
+('user@test.com', '$2y$10$2gP4lqtakPDslh0pR4G3qOt1ScHtjdlCkfQl2T7NDwRtDJPPodEn6', 'user');
 
 INSERT INTO annonces (user_id, category_id, title, description, price, delivery_postal, delivery_hand, status) VALUES
 (2, 1, 'Clavier mécanique RGB', 'Clavier mécanique en excellent état, switches Cherry MX Red, rétroéclairage RGB personnalisable. Utilisé 6 mois seulement.', 89.99, TRUE, TRUE, 'available'),

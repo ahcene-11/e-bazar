@@ -5,11 +5,8 @@ require_once 'models/AnnonceModel.php';
 require_once 'models/PhotoModel.php';
 require_once 'utils/upload.php';
 
-/**
- * Afficher le dashboard admin
- */
-function showAdminDashboard($pdo) {
-    // Vérifier que l'utilisateur est admin
+
+function adminDashboard($pdo) {
     if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
         $_SESSION['error'] = "Accès refusé : vous devez être administrateur";
         header('Location: index.php');
@@ -20,37 +17,21 @@ function showAdminDashboard($pdo) {
     $categoryModel = new CategoryModel($pdo);
     $annonceModel = new AnnonceModel($pdo);
     $photoModel = new PhotoModel($pdo);
-    
-    // Récupérer tous les utilisateurs (sauf l'admin lui-même)
     $users = $userModel->getAll();
-    
-    // Récupérer toutes les catégories avec le nombre d'annonces
-    $categories = $categoryModel->getAllWithCount();
-    
-    // Récupérer toutes les annonces (pour modération)
-    // On va créer une méthode dans AnnonceModel pour ça
-    // B. Annonces (Pré-chargement des photos pour éviter les requêtes dans la vue)
+     $categories = $categoryModel->getAllWithCount();
     $rawAnnonces = $annonceModel->getAllForAdmin();
     $allAnnonces = [];
     
     foreach ($rawAnnonces as $annonce) {
-        // On récupère la photo ici, dans le contrôleur
         $photo = $photoModel->getPrimaryByAnnonce($annonce['id']);
-        
-        // On injecte le nom de fichier directement dans le tableau de l'annonce
         $annonce['primary_photo_filename'] = $photo ? $photo->getFilename() : null;
-        
         $allAnnonces[] = $annonce;
     }
     $pageTitle = 'Administration - e-bazar';
     include 'views/admin_dashboard.php';
 }
 
-/**
- * Supprimer un utilisateur
- */
-function doDeleteUser($pdo) {
-    // Vérifier que l'utilisateur est admin
+function deleteUser($pdo) {
     if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
         $_SESSION['error'] = "Accès refusé";
         header('Location: index.php');
@@ -58,8 +39,6 @@ function doDeleteUser($pdo) {
     }
     
     $userId = $_POST['user_id'] ?? 0;
-    
-    // Empêcher l'admin de se supprimer lui-même
     if ($userId == $_SESSION['user']['id']) {
         $_SESSION['error'] = "Vous ne pouvez pas supprimer votre propre compte";
         header('Location: index.php?action=admin');
@@ -74,26 +53,18 @@ function doDeleteUser($pdo) {
         header('Location: index.php?action=admin');
         exit;
     }
-    
-    // Empêcher de supprimer un autre admin
     if ($user->getRole() === 'admin') {
         $_SESSION['error'] = "Vous ne pouvez pas supprimer un autre administrateur";
         header('Location: index.php?action=admin');
         exit;
     }
-    
-    // Récupérer toutes les annonces de l'utilisateur pour supprimer les photos
-    $annonceModel = new AnnonceModel($pdo);
+   $annonceModel = new AnnonceModel($pdo);
     $photoModel = new PhotoModel($pdo);
     $userAnnonces = $annonceModel->getByUser($userId);
-    
-    // Supprimer les photos de toutes ses annonces
     foreach ($userAnnonces as $annonce) {
         $photos = $photoModel->getByAnnonce($annonce['id']);
         deleteAllPhotos($photos);
     }
-    
-    // Supprimer l'utilisateur (les annonces seront supprimées par CASCADE)
     if ($userModel->delete($userId)) {
         $_SESSION['success'] = "Utilisateur supprimé avec succès";
     } else {
@@ -103,12 +74,7 @@ function doDeleteUser($pdo) {
     header('Location: index.php?action=admin');
     exit;
 }
-
-/**
- * Supprimer une annonce (par l'admin)
- */
-function doDeleteAnnonceAdmin($pdo) {
-    // Vérifier que l'utilisateur est admin
+function deleteAnnonceAdmin($pdo) {
     if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
         $_SESSION['error'] = "Accès refusé";
         header('Location: index.php');
@@ -127,12 +93,8 @@ function doDeleteAnnonceAdmin($pdo) {
         header('Location: index.php?action=admin');
         exit;
     }
-    
-    // Récupérer et supprimer les photos du disque
     $photos = $photoModel->getByAnnonce($annonceId);
     deleteAllPhotos($photos);
-    
-    // Supprimer l'annonce
     if ($annonceModel->delete($annonceId)) {
         $_SESSION['success'] = "Annonce supprimée avec succès";
     } else {
@@ -143,20 +105,14 @@ function doDeleteAnnonceAdmin($pdo) {
     exit;
 }
 
-/**
- * Créer une nouvelle catégorie
- */
-function doCreateCategory($pdo) {
-    // Vérifier que l'utilisateur est admin
+function createCategory($pdo) {
     if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
         $_SESSION['error'] = "Accès refusé";
         header('Location: index.php');
         exit;
     }
-    
     $categoryName = trim($_POST['category_name'] ?? '');
     
-    // Validation
     if (empty($categoryName)) {
         $_SESSION['error'] = "Le nom de la catégorie ne peut pas être vide";
         header('Location: index.php?action=admin');
@@ -181,11 +137,7 @@ function doCreateCategory($pdo) {
     exit;
 }
 
-/**
- * Renommer une catégorie
- */
-function doRenameCategory($pdo) {
-    // Vérifier que l'utilisateur est admin
+function renameCategory($pdo) {
     if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
         $_SESSION['error'] = "Accès refusé";
         header('Location: index.php');
@@ -195,7 +147,6 @@ function doRenameCategory($pdo) {
     $categoryId = $_POST['category_id'] ?? 0;
     $newName = trim($_POST['new_name'] ?? '');
     
-    // Validation
     if (empty($newName)) {
         $_SESSION['error'] = "Le nom de la catégorie ne peut pas être vide";
         header('Location: index.php?action=admin');
@@ -227,11 +178,7 @@ function doRenameCategory($pdo) {
     exit;
 }
 
-/**
- * Supprimer une catégorie
- */
-function doDeleteCategory($pdo) {
-    // Vérifier que l'utilisateur est admin
+function deleteCategory($pdo) {
     if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
         $_SESSION['error'] = "Accès refusé";
         header('Location: index.php');
@@ -248,8 +195,6 @@ function doDeleteCategory($pdo) {
         header('Location: index.php?action=admin');
         exit;
     }
-    
-    // Vérifier qu'il n'y a pas d'annonces dans cette catégorie
     $nbAnnonces = $categoryModel->countAnnonces($categoryId);
     
     if ($nbAnnonces > 0) {

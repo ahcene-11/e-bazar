@@ -3,25 +3,30 @@ require_once 'models/AnnonceModel.php';
 require_once 'models/PhotoModel.php';
 require_once 'utils/upload.php';
 
-function showCreateForm($pdo) {
+function createForm($pdo) {
     if (!isset($_SESSION['user'])) {
         $_SESSION['error'] = "Vous devez être connecté pour déposer une annonce";
-        header('Location: index.php?action=login');
+        header('Location: index.php?action=loginForm');
+        exit;
+    }
+
+    if (isset($_SESSION['user']['role']) && $_SESSION['user']['role'] === 'admin') {
+        $_SESSION['error'] = "Les administrateurs ne peuvent pas déposer d'annonces.";
+        header('Location: index.php'); 
         exit;
     }
     
     require_once 'models/CategoryModel.php';
-    
     $categoryModel = new CategoryModel($pdo);
     $categories = $categoryModel->getAll();
     
     include 'views/annonce_form.php';
 }
 
-function doCreateAnnonce($pdo) {
+function createAnnonce($pdo) {
     if (!isset($_SESSION['user'])) {
         $_SESSION['error'] = "Vous devez être connecté";
-        header('Location: index.php?action=login');
+        header('Location: index.php?action=loginForm');
         exit;
     }
     
@@ -105,7 +110,7 @@ function doCreateAnnonce($pdo) {
     exit;
 }
 
-function showAnnonceDetail($pdo) {
+function annonceDetail($pdo) {
     $annonceId = $_GET['id'] ?? 0;
     
     $annonceModel = new AnnonceModel($pdo);
@@ -124,10 +129,10 @@ function showAnnonceDetail($pdo) {
     include 'views/annonce_detail.php';
 }
 
-function doDeleteAnnonce($pdo) {
+function deleteAnnonce($pdo) {
     if (!isset($_SESSION['user'])) {
         $_SESSION['error'] = "Vous devez être connecté";
-        header('Location: index.php?action=login');
+        header('Location: index.php?action=loginForm');
         exit;
     }
     
