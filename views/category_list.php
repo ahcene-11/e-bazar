@@ -5,7 +5,7 @@ include 'views/components/header.php';
 ?>
 
 <main class="container">
-    <div class="breadcrumb">
+    <div class="fil_darianne">
         <a href="index.php">Retour à l'accueil</a>
     </div>
 
@@ -38,9 +38,9 @@ include 'views/components/header.php';
     <?php endif; ?>
 </div>
                     <div class="annonce-details">
-                        <h3 class="annonce-title-large">
+                        <h2 class="annonce-title-large">
                             <?= htmlspecialchars($annonce['title']) ?>
-                        </h3>
+                        </h2>
                         <p class="annonce-price-large">
                             <?= number_format($annonce['price'], 2, ',', ' ') ?> €
                         </p>
@@ -57,7 +57,7 @@ include 'views/components/header.php';
                                     <img src="public/images/envoyer.png" alt="envoi postal" class="petite-icone" > Envoi postal
                                 <?php endif; ?>
                                 <?php if ($annonce['delivery_hand']): ?>
-                                    <img src="public/images/achats.png" alt="remise en main propre" class="petite-icone" > Remise en main propre
+                                    <img src="public/images/achats.png" alt="remise en main propre" class="petite-icone" >  Remise en main propre
                                 <?php endif; ?>
                             </span>
                         </div>

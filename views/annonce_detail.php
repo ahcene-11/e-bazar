@@ -5,7 +5,7 @@ include 'views/components/header.php';
 ?>
 
 <main class="container">
-    <div class="breadcrumb">
+    <div class="fil_darianne">
         <a href="index.php">Accueil</a>
         <span class="separator">›</span>
         <a href="index.php?action=category&id=<?= $annonce['category_id'] ?>">
@@ -39,7 +39,7 @@ include 'views/components/header.php';
                 </div>
             <?php endforeach; ?>
         </div>
-        <!---- a revoir -->
+        
         <script>
         function changeMainPhoto(src, thumbnail) {
             document.getElementById('main-photo').src = src;
@@ -68,7 +68,7 @@ include 'views/components/header.php';
             </div>
 
             <div class="detail-section">
-                <h3>Description</h3>
+                <h2>Description</h2>
                 <p class="detail-description"><?= nl2br(htmlspecialchars($annonce['description'])) ?></p>
             </div>
 
@@ -76,10 +76,10 @@ include 'views/components/header.php';
                 <h3>Modes de livraison acceptés</h3>
                 <div class="delivery-modes">
                     <?php if ($annonce['delivery_postal']): ?>
-                        <span class="delivery-badge"> Envoi postal</span>
+                        <span class="delivery-badge"> <img src="public/images/envoyer.png" alt="envoi postal" class="petite-icone" > Envoi postal</span>
                     <?php endif; ?>
                     <?php if ($annonce['delivery_hand']): ?>
-                        <span class="delivery-badge"> Remise en main propre</span>
+                        <span class="delivery-badge"> <img src="public/images/achats.png" alt="remise en main propre" class="petite-icone" > Remise en main propre</span>
                     <?php endif; ?>
                 </div>
             </div>

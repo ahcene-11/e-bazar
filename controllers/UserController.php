@@ -15,7 +15,13 @@ function login() {
     if ($user) {
         session_regenerate_id(true);
         $_SESSION['user'] = $user->toArray();
-        header('Location: index.php');
+        if (isset($_SESSION['pending_purchase_id'])) {
+            $annonceId = $_SESSION['pending_purchase_id'];
+            unset($_SESSION['pending_purchase_id']); 
+            header('Location: index.php?action=purchaseConfirm&id=' . $annonceId);
+        } else {
+            header('Location: index.php');
+        }
     } else {
         $_SESSION['error'] = "Email ou mot de passe incorrect";
         header('Location: index.php?action=loginForm');

@@ -81,7 +81,7 @@ include 'views/components/header.php';
                                 <?php endif; ?>
                             </div>
                             <div class="item-info-admin">
-                                <h4><?= htmlspecialchars($annonce['title']) ?></h4>
+                                <h3><?= htmlspecialchars($annonce['title']) ?></h3>
                                 <p class="item-meta">
                                     Par <?= htmlspecialchars($annonce['seller_email']) ?> 
                                     • <?= htmlspecialchars($annonce['category_name']) ?>

@@ -25,57 +25,59 @@ include 'views/components/header.php';
             </div>
         </div>
         <form action="index.php?action=purchase" method="POST" class="purchase-form">
-            <input type="hidden" name="annonce_id" value="<?= $annonce['id'] ?>">
+    <input type="hidden" name="annonce_id" value="<?= $annonce['id'] ?>">
 
-            <div class="form-group">
-                <label class="required">Mode de livraison</label>
-                <div class="radio-group">
-                    <?php if ($annonce['delivery_postal']): ?>
-                        <label class="radio-label">
-                            <input type="radio" name="delivery_mode" value="postal" required>
-                            <div class="radio-content">
-                                <span class="radio-icon">📮</span>
-                                <div>
-                                    <strong>Envoi postal</strong>
-                                    <p class="radio-description">Le vendeur vous enverra le bien par la poste</p>
-                                </div>
-                            </div>
-                        </label>
-                    <?php endif; ?>
+    <div class="form-group">
+        <label class="required">Mode de livraison</label>
+        <div class="radio-group">
+            <?php if ($annonce['delivery_postal']): ?>
+                <label class="radio-label">
+                    <input type="radio" name="delivery_mode" value="postal" required>
+                    <span class="radio-content">
+                        <span style="display:block; width: 100%;">
+                            <img src="public/images/envoyer.png" alt="envoi postal" class="petite-icone" >
+                            <strong>Envoi postal</strong>
+                            <span class="radio-description" style="display:block; margin-top: 5px;">
+                                Le vendeur vous enverra le bien par la poste
+                            </span>
+                        </span>
+                    </span>
+                </label>
+            <?php endif; ?>
 
-                    <?php if ($annonce['delivery_hand']): ?>
-                        <label class="radio-label">
-                            <input type="radio" name="delivery_mode" value="hand" required>
-                            <div class="radio-content">
-                                <span class="radio-icon">🤝</span>
-                                <div>
-                                    <strong>Remise en main propre</strong>
-                                    <p class="radio-description">Vous récupérerez le bien directement auprès du vendeur</p>
-                                </div>
-                            </div>
-                        </label>
-                    <?php endif; ?>
-                </div>
-            </div>
+            <?php if ($annonce['delivery_hand']): ?>
+                <label class="radio-label">
+                    <input type="radio" name="delivery_mode" value="hand" required>
+                    <span class="radio-content">
+                        <span style="display:block; width: 100%;">
+                            <img src="public/images/achats.png" alt="remise en main propre" class="petite-icone" >
+                            <strong>Remise en main propre</strong>
+                            <span class="radio-description" style="display:block; margin-top: 5px;">
+                                Vous récupérerez le bien directement auprès du vendeur
+                            </span>
+                        </span>
+                    </span>
+                </label>
+            <?php endif; ?>
+        </div>
+    </div>
+    
+    <div class="info-box">
+        <h4>Informations importantes</h4>
+        <ul>
+            <li>Le vendeur sera notifié de votre achat</li>
+            <li>Vous devrez confirmer la réception du bien une fois reçu</li>
+        </ul>
+    </div>
 
-            <div class="info-box">
-                <h4>ℹ️ Informations importantes</h4>
-                <ul>
-                    <li>Une fois l'achat confirmé, l'annonce ne sera plus disponible</li>
-                    <li>Le vendeur sera notifié de votre achat</li>
-                    <li>Vous devrez confirmer la réception du bien une fois reçu</li>
-                    <li>Cette plateforme ne gère pas les paiements financiers</li>
-                </ul>
-            </div>
-
-            <div class="form-actions">
-                <a href="index.php?action=detail&id=<?= $annonce['id'] ?>" class="btn-secondary">
-                    Annuler
-                </a>
-                <button type="submit" class="btn-buy">
-                    Confirmer l'achat
-                </button>
-            </div>
-        </form>
+    <div class="form-actions">
+        <a href="index.php?action=detail&id=<?= $annonce['id'] ?>" class="btn-secondary">
+            Annuler
+        </a>
+        <button type="submit" class="btn-buy">
+            Confirmer l'achat
+        </button>
+    </div>
+</form>
     </div>
 </main>
