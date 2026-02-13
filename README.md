@@ -1,2 +1,2 @@
 # projet-web
-projet de e-commerce (mais ans la partie commerce) 
+projet de e-commerce (mais sans la partie commerce) 
