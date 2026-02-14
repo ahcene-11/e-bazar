@@ -1,2 +1,1 @@
-# projet-web
-projet de e-commerce (mais sans la partie commerce) 
+# site de petites annonces style Leboncoin
